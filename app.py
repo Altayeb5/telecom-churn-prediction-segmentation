@@ -32,7 +32,7 @@ st.write(
 
 st.caption(
     "Portfolio demonstration using the IBM Telco Customer Churn benchmark "
-    "dataset. This is not a Zain Sudan production system."
+    "dataset."
 )
 
 with st.form("customer_input_form"):

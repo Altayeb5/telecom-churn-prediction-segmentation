@@ -2,11 +2,31 @@
 
 An end-to-end telecom analytics project using the IBM Telco Customer Churn public benchmark dataset.
 
+## Interactive Streamlit app
+
+This project includes an interactive Streamlit app that uses the saved Random Forest pipeline to estimate churn risk from customer account details.
+
+The app:
+
+- Accepts customer profile, billing, contract, and service information.
+- Recreates the four engineered features used during model training.
+- Displays predicted churn probability and the model classification.
+- Provides candidate retention actions based on observed patterns in this project.
+
+### Run locally
+
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```
+
+> The application is a portfolio demonstration using the IBM Telco Customer Churn benchmark dataset. Predictions are model estimates, not guarantees.
+
 ## Business objective
 
 Identify churn patterns, segment customers into meaningful groups, and compare machine-learning models that could help a telecom retention team prioritize outreach.
 
-> This project uses a public benchmark dataset for portfolio purposes. It does not represent Zain Sudan customers or operations.
+> This project uses a public benchmark dataset for portfolio purposes.
 
 ## Dataset
 

@@ -1,8 +1,8 @@
 jupyter
 matplotlib
-numpy
-pandas
-scikit-learn
+numpy 2.4.2
+pandas 3.0.0
+scikit-learn 1.9.0
 seaborn
-streamlit
-joblib
+streamlit 1.63.0
+joblib 1.5.3

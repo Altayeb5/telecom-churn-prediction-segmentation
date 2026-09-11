@@ -1,17 +1,29 @@
 # Telecom Customer Churn Prediction & Customer Segmentation
 
-An end-to-end telecom analytics project using the IBM Telco Customer Churn public benchmark dataset.
+An end-to-end telecom analytics and machine-learning project using the IBM Telco Customer Churn public benchmark dataset.
+
+## Live demo
+
+Try the interactive churn-prediction app:
+
+[Open the Streamlit app](https://telecom-churn-predictor-altayeb.streamlit.app/)
+
+> This is a portfolio demonstration using a public benchmark dataset.
+
+## Business objective
+
+Identify churn patterns, segment customers into meaningful groups, and compare machine-learning models that could help a telecom retention team prioritize outreach.
 
 ## Interactive Streamlit app
 
-This project includes an interactive Streamlit app that uses the saved Random Forest pipeline to estimate churn risk from customer account details.
+The Streamlit app uses the selected Random Forest pipeline to estimate churn risk from customer account details.
 
-The app:
+It:
 
 - Accepts customer profile, billing, contract, and service information.
-- Recreates the four engineered features used during model training.
-- Displays predicted churn probability and the model classification.
-- Provides candidate retention actions based on observed patterns in this project.
+- Recreates the engineered features used during model training.
+- Displays predicted churn probability and a churn classification.
+- Provides candidate retention actions based on observed project patterns.
 
 ### Run locally
 
@@ -20,13 +32,7 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-> The application is a portfolio demonstration using the IBM Telco Customer Churn benchmark dataset. Predictions are model estimates, not guarantees.
-
-## Business objective
-
-Identify churn patterns, segment customers into meaningful groups, and compare machine-learning models that could help a telecom retention team prioritize outreach.
-
-> This project uses a public benchmark dataset for portfolio purposes.
+Predictions are model estimates, not guarantees.
 
 ## Dataset
 
@@ -43,6 +49,7 @@ Identify churn patterns, segment customers into meaningful groups, and compare m
 4. Customer segmentation with K-means
 5. Churn-model comparison
 6. Model interpretation and retention recommendations
+7. Streamlit deployment
 
 ## Key findings
 
@@ -53,6 +60,8 @@ Identify churn patterns, segment customers into meaningful groups, and compare m
 - Customers without tech support had a **41.64%** observed churn rate.
 
 These are descriptive associations, not causal conclusions.
+
+![Observed churn rate by contract](reports/figures/churn_rate_by_contract.png)
 
 ## Customer segmentation
 
@@ -65,17 +74,26 @@ K-means clustering was evaluated across 2–8 clusters. Four clusters were selec
 | Basic non-internet customers              |         21.67% |               7.40% | Low-charge customers without internet or add-on services                                                     |
 | Established high-value internet customers |         29.31% |              15.07% | Long-tenure, high-charge, high-service-adoption customers                                                    |
 
+![Cluster-selection metrics](reports/figures/cluster_selection_metrics.png)
+
 ## Churn prediction
 
-The data was split into stratified training (80%) and held-out test (20%) sets. Three models were evaluated using precision, recall, F1-score, ROC-AUC, and confusion matrices.
+The data was split into stratified training (80%) and held-out test (20%) sets. Logistic Regression, Decision Tree, Random Forest, and XGBoost were evaluated using the same features, preprocessing approach, and evaluation metrics.
 
-| Model               | Precision | Recall |  F1-score |   ROC-AUC |
-| ------------------- | --------: | -----: | --------: | --------: |
-| Random Forest       |     0.536 |  0.786 | **0.637** |     0.839 |
-| Logistic Regression |     0.505 |  0.783 |     0.614 | **0.842** |
-| Decision Tree       |     0.500 |  0.791 |     0.613 |     0.833 |
+| Model               | Precision |    Recall |  F1-score |   ROC-AUC |
+| ------------------- | --------: | --------: | --------: | --------: |
+| Random Forest       | **0.536** |     0.786 | **0.637** |     0.839 |
+| XGBoost             |     0.518 | **0.794** |     0.627 | **0.845** |
+| Logistic Regression |     0.505 |     0.783 |     0.614 |     0.842 |
+| Decision Tree       |     0.500 |     0.791 |     0.613 |     0.833 |
 
-Random Forest was selected because it achieved the best F1-score and precision while maintaining strong recall and ROC-AUC.
+### Final model decision
+
+Random Forest remains the selected and deployed model because it achieved the highest F1-score and precision, providing the best overall precision-recall balance under this project's selection criterion.
+
+XGBoost achieved the highest ROC-AUC and recall, but its lower precision and F1-score did not justify replacing the tested Random Forest deployment.
+
+![Model confusion matrices](reports/figures/model_confusion_matrices.png)
 
 ## Model interpretation
 
@@ -86,7 +104,9 @@ Permutation importance identified these leading predictive features:
 3. Internet service
 4. Total charges
 
-Feature importance indicates predictive contribution within this model; it does not establish causality.
+Feature importance measures predictive contribution within the selected Random Forest model; it does not establish causality.
+
+![Random Forest feature importance](reports/figures/random_forest_feature_importance.png)
 
 ## Retention recommendations
 
@@ -99,9 +119,8 @@ Feature importance indicates predictive contribution within this model; it does 
 ## Repository structure
 
 ```text
-├── data/
-│   ├── raw/
-│   └── processed/
+├── models/
+│   └── random_forest_churn_pipeline.joblib
 ├── notebooks/
 │   ├── 01_data_understanding.ipynb
 │   ├── 02_feature_engineering.ipynb
@@ -109,20 +128,25 @@ Feature importance indicates predictive contribution within this model; it does 
 │   └── 04_churn_prediction.ipynb
 ├── reports/
 │   └── figures/
+├── app.py
 ├── README.md
 ├── requirements.txt
 └── .gitignore
 ```
 
-## How to run
+## How to run the analysis
 
 ```bash
 pip install -r requirements.txt
 jupyter notebook
 ```
 
-Run the notebooks in numerical order. Download the dataset and save it as:
+Run the notebooks in numerical order. Download the dataset and save it locally as:
 
 ```text
 data/raw/WA_Fn-UseC_-Telco-Customer-Churn.csv
 ```
+
+## Tech stack
+
+Python, Pandas, NumPy, Matplotlib, Seaborn, scikit-learn, XGBoost, Streamlit, and Joblib.
